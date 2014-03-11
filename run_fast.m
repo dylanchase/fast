@@ -1,7 +1,7 @@
 % This is a script for running fast from MATLAB
 
 fast_dir = 'fast';
-file_name = 'my_file';
+file_name = 'Sample_FAST';
 
 in_file = [file_name '.fst'];
 out_file = [file_name '.out'];
