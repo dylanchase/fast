@@ -1,6 +1,6 @@
 function write_fast_file(in_file, fast_dir)
 
-fid = fopen([fast_dir filesep fast_dir], 'w+');
+fid = fopen([fast_dir filesep in_file], 'w+');
 
 %% Variables
 dt = '   0.0125';
@@ -26,7 +26,7 @@ fprintf(fid,'   0        VSContrl    - Variable-speed control mode {0: none, 1: 
 fprintf(fid,'9999.9      VS_RtGnSp   - Rated generator speed for simple variable-speed generator control (HSS side) (rpm) [used only when VSContrl=1]\n');
 fprintf(fid,'9999.9      VS_RtTq     - Rated generator torque/constant generator torque in Region 3 for simple variable-speed generator control (HSS side) (N-m) [used only when VSContrl=1]\n');
 fprintf(fid,'9999.9      VS_Rgn2K    - Generator torque constant in Region 2 for simple variable-speed generator control (HSS side) (N-m/rpm^2) [used only when VSContrl=1]\n');
-fprintf(fid,'9999.9      VS_SlPc     - Rated generator slip percentage in Region 2 1/2 for simple variable-speed generator control (%) [used only when VSContrl=1]\n');
+fprintf(fid,'9999.9      VS_SlPc     - Rated generator slip percentage in Region 2 1/2 for simple variable-speed generator control (percent) [used only when VSContrl=1]\n');
 fprintf(fid,'   1        GenModel    - Generator model {1: simple, 2: Thevenin, 3: user-defined from routine UserGen} (switch) [used only when VSContrl=0]\n');
 fprintf(fid,'True        GenTiStr    - Method to start the generator {T: timed using TimGenOn, F: generator speed using SpdGenOn} (flag)\n');
 fprintf(fid,'True        GenTiStp    - Method to stop the generator {T: timed using TimGenOf, F: when generator power = 0} (flag)\n');
@@ -112,8 +112,8 @@ fprintf(fid,'2607.89E3   NacYIner    - Nacelle inertia about yaw axis (kg m^2)\n
 fprintf(fid,' 534.116    GenIner     - Generator inertia about HSS (kg m^2)\n');
 fprintf(fid,' 115.926E3  HubIner     - Hub inertia about rotor axis [3 blades] or teeter axis [2 blades] (kg m^2)\n');
 fprintf(fid,'---------------------- DRIVETRAIN ----------------------------------------------\n');
-fprintf(fid,' 100.0      GBoxEff     - Gearbox efficiency (%)\n');
-fprintf(fid,'  94.4      GenEff      - Generator efficiency [ignored by the Thevenin and user-defined generator models] (%)\n');
+fprintf(fid,' 100.0      GBoxEff     - Gearbox efficiency (percent)\n');
+fprintf(fid,'  94.4      GenEff      - Generator efficiency [ignored by the Thevenin and user-defined generator models] (percent)\n');
 fprintf(fid,'  97.0      GBRatio     - Gearbox ratio (-)\n');
 fprintf(fid,'False       GBRevers    - Gearbox reversal {T: if rotor and generator rotate in opposite directions} (flag)\n');
 fprintf(fid,'  28.1162E3 HSSBrTqF    - Fully deployed HSS-brake torque (N-m)\n');
@@ -122,7 +122,7 @@ fprintf(fid,'            DynBrkFi    - File containing a mech-gen-torque vs HSS-
 fprintf(fid,' 867.637E6  DTTorSpr    - Drivetrain torsional spring (N-m/rad)\n');
 fprintf(fid,'   6.215E6  DTTorDmp    - Drivetrain torsional damper (N-m/(rad/s))\n');
 fprintf(fid,'---------------------- SIMPLE INDUCTION GENERATOR ------------------------------\n');
-fprintf(fid,'2.0      SIG_SlPc    - Rated generator slip percentage (%) [used only when VSContrl=0 and GenModel=1]\n');
+fprintf(fid,'2.0      SIG_SlPc    - Rated generator slip percentage (percent) [used only when VSContrl=0 and GenModel=1]\n');
 fprintf(fid,'1800      SIG_SySp    - Synchronous (zero-torque) generator speed (rpm) [used only when VSContrl=0 and GenModel=1]\n');
 fprintf(fid,'26526      SIG_RtTq    - Rated torque (N-m) [used only when VSContrl=0 and GenModel=1]\n');
 fprintf(fid,'2.0      SIG_PORt    - Pull-out ratio (Tpullout/Trated) (-) [used only when VSContrl=0 and GenModel=1]\n');
@@ -215,16 +215,16 @@ fprintf(fid,'"RootFxc2 , RootFyc2 , RootFzc2"                             - Out-
 fprintf(fid,'"RootMxc2 , RootMyc2 , RootMzc2"                             - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 2\n');
 fprintf(fid,'"RootFxc3 , RootFyc3 , RootFzc3"                             - Out-of-plane shear, in-plane shear, and axial forces at the root of blade 3\n');
 fprintf(fid,'"RootMxc3 , RootMyc3 , RootMzc3"                             - In-plane bending, out-of-plane bending, and pitching moments at the root of blade 3\n');
-fprintf(fid,'"Spn1MLxb1, Spn1MLyb1, Spn1MLzb1"                            - Blade 1 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50% span)\n');
-fprintf(fid,'"Spn1MLxb2, Spn1MLyb2, Spn1MLzb2"                            - Blade 2 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50% span)\n');
-fprintf(fid,'"Spn1MLxb3, Spn1MLyb3, Spn1MLzb3"                            - Blade 3 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50% span)\n');
+fprintf(fid,'"Spn1MLxb1, Spn1MLyb1, Spn1MLzb1"                            - Blade 1 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50percent span)\n');
+fprintf(fid,'"Spn1MLxb2, Spn1MLyb2, Spn1MLzb2"                            - Blade 2 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50percent span)\n');
+fprintf(fid,'"Spn1MLxb3, Spn1MLyb3, Spn1MLzb3"                            - Blade 3 local edgewise bending, flapwise bending, and pitching moments at span station 1 (approx. 50percent span)\n');
 fprintf(fid,'"RotThrust, LSSGagFya, LSSGagFza"                            - Rotor thrust and low-speed shaft 0- and 90-rotating shear forces at the main bearing\n');
 fprintf(fid,'"RotTorq  , LSSGagMya, LSSGagMza"                            - Rotor torque and low-speed shaft 0- and 90-rotating bending moments at the main bearing\n');
 fprintf(fid,'"YawBrFxp , YawBrFyp , YawBrFzp"                             - Fore-aft shear, side-to-side shear, and vertical forces at the top of the tower (not rotating with nacelle yaw)\n');
 fprintf(fid,'"YawBrMxp , YawBrMyp , YawBrMzp"                             - Side-to-side bending, fore-aft bending, and yaw moments at the top of the tower (not rotating with nacelle yaw)\n');
 fprintf(fid,'"TwrBsFxt , TwrBsFyt , TwrBsFzt"                             - Fore-aft shear, side-to-side shear, and vertical forces at the base of the tower (platform)\n');
 fprintf(fid,'"TwrBsMxt , TwrBsMyt , TwrBsMzt"                             - Side-to-side bending, fore-aft bending, and yaw moments at the base of the tower (platform)\n');
-fprintf(fid,'"TwHt1MLxt, TwHt1MLyt, TwHt1MLzt"                            - Local side-to-side bending, fore-aft bending, and yaw moments at tower gage 1 (approx. 50% elevation)\n');
+fprintf(fid,'"TwHt1MLxt, TwHt1MLyt, TwHt1MLzt"                            - Local side-to-side bending, fore-aft bending, and yaw moments at tower gage 1 (approx. 50percent elevation)\n');
 fprintf(fid,'"Fair1Ten , Fair1Ang , Anch1Ten , Anch1Ang"                  - Line 1 fairlead and anchor effective tensions and vertical angles\n');
 fprintf(fid,'"Fair2Ten , Fair2Ang , Anch2Ten , Anch2Ang"                  - Line 2 fairlead and anchor effective tensions and vertical angles\n');
 fprintf(fid,'"Fair3Ten , Fair3Ang , Anch3Ten , Anch3Ang"                  - Line 3 fairlead and anchor effective tensions and vertical angles\n');
@@ -244,4 +244,9 @@ fprintf(fid,'\n');
 fprintf(fid,'\n');
 
 %% close file
-fclose(fid);
+status = fclose(fid);
+if status == 0
+    disp(['Successfully wrote FAST input file: ' in_file]);
+elseif status == -1
+    errordlg(['Error writing FAST input file: ' in_file]);
+end
